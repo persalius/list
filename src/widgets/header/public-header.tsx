@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils';
-import { Logo } from '../logo';
+import { cn } from '@/shared/lib/utils';
+import { Logo } from '../../shared/ui/logo';
 
 export default function PublicHeader() {
   return (
