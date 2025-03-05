@@ -1,11 +1,7 @@
-import { Button } from '@/components/ui/button';
+import Home from '@/components/home/home';
 
 function HomePage() {
-  return (
-    <div>
-      <Button>Click me</Button>
-    </div>
-  );
+  return <Home />;
 }
 
 export default HomePage;
