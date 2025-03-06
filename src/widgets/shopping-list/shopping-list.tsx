@@ -7,7 +7,7 @@ import {
 import { useColumns } from './hooks/useColumns';
 import { Product } from '@/shared/types/product';
 import { Button } from '@/shared/ui/button';
-import { AddProductButton } from './ui/add-product-button';
+import { AddProductButton } from './ui/add-product/add-product';
 import { CATEGORIES } from '@/shared/config/product';
 import { useCallback } from 'react';
 import { purchasedItems, purchasedVariants } from './model/constants';
