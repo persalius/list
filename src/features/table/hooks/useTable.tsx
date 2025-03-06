@@ -5,7 +5,6 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-  VisibilityState,
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
@@ -16,7 +15,6 @@ interface Props<T> {
 
 export const useTable = <T,>({ data, columns }: Props<T>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -25,10 +23,8 @@ export const useTable = <T,>({ data, columns }: Props<T>) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
     state: {
       columnFilters,
-      columnVisibility,
     },
   });
 

@@ -16,7 +16,9 @@ interface Props<T> {
 
 export const DataTable = <T,>({ table, columnsLength }: Props<T>) => {
   return (
-    <UiTable classNames={{ root: 'rounded-md border' }}>
+    <UiTable
+      classNames={{ root: 'rounded-md border max-h-120 overflow-y-auto' }}
+    >
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>

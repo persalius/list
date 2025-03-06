@@ -15,16 +15,21 @@ import {
 export const useColumns = () => {
   const columns: ColumnDef<Product>[] = [
     {
-      id: 'select',
+      id: 'isPurchased',
       accessorKey: 'isPurchased',
+      meta: {
+        filterVariant: 'select',
+      },
       header: '',
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
+      cell: ({ row }) => {
+        return (
+          <Checkbox
+            checked={row.getValue('isPurchased')}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        );
+      },
       enableSorting: false,
       enableHiding: false,
     },
@@ -42,6 +47,7 @@ export const useColumns = () => {
     },
     {
       accessorKey: 'category',
+      filterFn: 'equalsString',
       header: () => <div className="text-right">Category</div>,
       cell: ({ row }) => (
         <div className="text-right font-medium">{row.getValue('category')}</div>
