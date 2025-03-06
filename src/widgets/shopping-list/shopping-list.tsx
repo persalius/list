@@ -10,6 +10,7 @@ import { Button } from '@/shared/ui/button';
 import { AddProductButton } from './ui/add-product-button';
 import { CATEGORIES } from '@/shared/config/product';
 import { useCallback } from 'react';
+import { purchasedItems, purchasedVariants } from './model/constants';
 
 const data: Product[] = [
   {
@@ -84,11 +85,6 @@ const data: Product[] = [
   },
 ];
 
-const purchasedItems = {
-  purchased: 'Purchased',
-  notPurchased: 'Not Purchased',
-};
-
 export default function ShoppingList() {
   const columns = useColumns();
   const table = useTable({ columns, data });
@@ -98,7 +94,7 @@ export default function ShoppingList() {
       const isValidValue = Object.keys(purchasedItems).find(
         (item) => item === value,
       );
-      const isPurchased = value === 'purchased';
+      const isPurchased = value === purchasedVariants.purchased;
       table
         .getColumn('isPurchased')
         ?.setFilterValue(isValidValue ? isPurchased : '');
