@@ -5,5 +5,5 @@ export const purchasedVariants = {
 
 export const purchasedItems = {
   [purchasedVariants.purchased]: 'Purchased',
-  [purchasedVariants.purchased]: 'Not Purchased',
+  [purchasedVariants.notPurchased]: 'Not Purchased',
 };
