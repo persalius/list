@@ -7,8 +7,9 @@ export const useProducts = () => {
 export const useProductsActions = () => {
   const addProduct = useProductsStore((state) => state.addProduct);
   const updateProduct = useProductsStore((state) => state.updateProduct);
+  const removeProduct = useProductsStore((state) => state.removeProduct);
 
-  return { addProduct, updateProduct };
+  return { addProduct, updateProduct, removeProduct };
 };
 
 export const useProductsHistory = () => {

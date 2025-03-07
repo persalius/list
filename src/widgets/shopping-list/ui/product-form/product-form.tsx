@@ -58,7 +58,7 @@ export const ProductForm: FC<Props> = ({
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Name" />
+                <Input {...field} placeholder="Name" autoComplete="off" />
               </FormControl>
               <FormErrorMessage />
             </FormItem>

@@ -15,6 +15,7 @@ type State = {
 type Action = {
   addProduct: (product: Product) => void;
   updateProduct: (rowIndex: number, productData: Partial<Product>) => void;
+  removeProduct: (rowIndex: number) => void;
 };
 
 const useProductsStore = create<State & Action>()(
@@ -26,7 +27,7 @@ const useProductsStore = create<State & Action>()(
       const newProducts = [...get().products, product];
       set({
         products: newProducts,
-        history: [...get().history, { type: 'add', product }],
+        // history: [...get().history, { type: 'add', product }],
       });
     },
 
@@ -38,26 +39,26 @@ const useProductsStore = create<State & Action>()(
         };
 
         state.products[rowIndex] = updatedProduct;
-        state.history.push({
-          type: 'update',
-          product: updatedProduct,
-        });
+        // state.history.push({
+        //   type: 'update',
+        //   product: updatedProduct,
+        // });
       });
     },
 
-    //   removeProduct: (id: number) => {
-    //     const removedProduct = get().products.find((p) => p.id === id);
-    //     if (removedProduct) {
-    //       const newProducts = get().products.filter((p) => p.id !== id);
-    //       set({
-    //         products: newProducts,
-    //         history: [
-    //           ...get().history,
-    //           { type: 'remove', product: removedProduct },
-    //         ],
-    //       });
-    //     }
-    //   },
+    removeProduct: (rowIndex: number) => {
+      return set((state) => {
+        // set({
+        //   products: newProducts,
+        //   history: [
+        //     ...get().history,
+        //     { type: 'remove', product: removedProduct },
+        //   ],
+        // });
+
+        state.products.splice(rowIndex, 1);
+      });
+    },
 
     //   undo: () => {
     //     const history = get().history;

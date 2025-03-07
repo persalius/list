@@ -1,19 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/shared/ui/checkbox';
 import { CategoriesType, Product } from '@/shared/types/product';
-import { Button } from '@/shared/ui/button';
-import { MoreHorizontal } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/shared/ui/dropdown-menu';
 import { CATEGORIES } from '@/shared/config/product';
 import { cn } from '@/shared/lib/utils';
-import { EditProduct } from '../ui/edit-product/edit-product';
+import { DataTableRowActions } from '../ui/data-table-row-actions/data-table-row-actions';
 
 export const useColumns = () => {
   const columns: ColumnDef<Product>[] = [
@@ -72,26 +62,7 @@ export const useColumns = () => {
     {
       id: 'actions',
       enableHiding: false,
-      cell: ({ row }) => {
-        return (
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <EditProduct product={row.original} rowIndex={row.index} />
-                <DropdownMenuItem>Remove</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        );
-      },
+      cell: ({ row }) => <DataTableRowActions row={row} />,
     },
   ];
 
