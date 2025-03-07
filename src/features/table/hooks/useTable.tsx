@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  TableMeta,
   useReactTable,
 } from '@tanstack/react-table';
 import { useState } from 'react';
@@ -11,9 +12,10 @@ import { useState } from 'react';
 interface Props<T> {
   data: T[];
   columns: ColumnDef<T>[];
+  meta?: TableMeta<T>;
 }
 
-export const useTable = <T,>({ data, columns }: Props<T>) => {
+export const useTable = <T,>({ meta, data, columns }: Props<T>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -26,6 +28,7 @@ export const useTable = <T,>({ data, columns }: Props<T>) => {
     state: {
       columnFilters,
     },
+    meta,
   });
 
   return table;

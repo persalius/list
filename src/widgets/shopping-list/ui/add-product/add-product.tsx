@@ -1,3 +1,4 @@
+import { memo, useState } from 'react';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -10,9 +11,11 @@ import {
 } from '@/shared/ui/dialog';
 import { Form } from './form';
 
-export function AddProductButton() {
+export const AddProductButton = memo(() => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add new</Button>
       </DialogTrigger>
@@ -24,7 +27,7 @@ export function AddProductButton() {
           </DialogDescription>
         </DialogHeader>
 
-        <Form />
+        <Form onClose={() => setIsOpen(false)} />
 
         <DialogFooter>
           <Button type="submit" form="createNewProduct">
@@ -34,4 +37,4 @@ export function AddProductButton() {
       </DialogContent>
     </Dialog>
   );
-}
+});
