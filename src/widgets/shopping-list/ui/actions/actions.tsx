@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { FilterTable, SearchInput } from '@/features/table';
 import { Button } from '@/shared/ui/button';
 import { Table as TableData } from '@tanstack/react-table';
-import { AddProductButton } from '../add-product/add-product';
+import { CreateProduct } from '../create-product/create-product';
 import { CATEGORIES } from '@/shared/config/product';
 import { purchasedItems, purchasedVariants } from '../../model/constants';
 import { Product } from '@/shared/types/product';
@@ -37,7 +37,7 @@ export const Actions: FC<Props> = ({ table }) => {
           <Button type="button" onClick={() => {}}>
             Undo
           </Button>
-          <AddProductButton />
+          <CreateProduct />
         </div>
       </div>
 

@@ -14,9 +14,19 @@ export const formSchema = z.object({
       .number({ invalid_type_error: 'Quantity is required' })
       .min(1, 'Quantity is required'),
   ),
-  category: z.enum(categoriesKeys, {
-    required_error: 'Category is required',
-  }),
+  category: z
+    .union([
+      z.enum(categoriesKeys, {
+        required_error: 'Category is required',
+      }),
+      z.null(),
+    ])
+    .refine((val) => val !== null, {
+      message: 'Category is required',
+    }),
+  // .enum(categoriesKeys, {
+  //   required_error: 'Category is required',
+  // }),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

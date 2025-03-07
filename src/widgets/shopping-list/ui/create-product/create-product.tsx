@@ -1,4 +1,5 @@
 import { memo, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -9,10 +10,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/shared/ui/dialog';
-import { Form } from './form';
+import { ProductForm } from '../product-form/product-form';
+import { FormValues } from '../product-form/schema';
+import { useProductsActions } from '@/entities/Product/model/hooks';
 
-export const AddProductButton = memo(() => {
+const formId = 'createProduct';
+
+export const CreateProduct = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
+  const { addProduct } = useProductsActions();
+
+  const handleSubmitForm = (values: FormValues) => {
+    addProduct({
+      id: uuidv4(),
+      name: values.name,
+      quantity: values.quantity,
+      category: values.category,
+      isPurchased: false,
+    });
+    setIsOpen(false);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -27,10 +44,10 @@ export const AddProductButton = memo(() => {
           </DialogDescription>
         </DialogHeader>
 
-        <Form onClose={() => setIsOpen(false)} />
+        <ProductForm onSubmitForm={handleSubmitForm} formId={formId} />
 
         <DialogFooter>
-          <Button type="submit" form="createNewProduct">
+          <Button type="submit" form={formId}>
             Submit
           </Button>
         </DialogFooter>

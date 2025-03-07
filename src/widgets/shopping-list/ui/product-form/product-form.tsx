@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from './schema';
@@ -19,38 +18,36 @@ import {
   SelectValue,
 } from '@/shared/ui/select';
 import { CATEGORIES } from '@/shared/config/product';
-import { useProductsActions } from '@/entities/Product/model/hooks';
+import { Product } from '@/shared/types/product';
 
 interface Props {
-  onClose: () => void;
+  onSubmitForm: (values: FormValues) => void;
+  formId: string;
+  defaultValues?: Product;
 }
 
-export const Form: FC<Props> = ({ onClose }: Props) => {
-  const { addProduct } = useProductsActions();
-
+export const ProductForm: FC<Props> = ({
+  formId,
+  defaultValues,
+  onSubmitForm,
+}: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      quantity: 1,
+      name: defaultValues?.name || '',
+      quantity: defaultValues?.quantity || 1,
+      category: defaultValues?.category || undefined,
     },
   });
 
   const onSubmit = (values: FormValues) => {
-    addProduct({
-      id: uuidv4(),
-      name: values.name,
-      quantity: values.quantity,
-      category: values.category,
-      isPurchased: false,
-    });
-    onClose();
+    onSubmitForm(values);
   };
 
   return (
     <FormProvider {...form}>
       <form
-        id="createNewProduct"
+        id={formId}
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4"
       >
@@ -114,7 +111,6 @@ export const Form: FC<Props> = ({ onClose }: Props) => {
             </FormItem>
           )}
         />
-        {/* <Button type="submit">Submit</Button> */}
       </form>
     </FormProvider>
   );

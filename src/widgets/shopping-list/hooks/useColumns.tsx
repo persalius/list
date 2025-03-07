@@ -13,6 +13,7 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { CATEGORIES } from '@/shared/config/product';
 import { cn } from '@/shared/lib/utils';
+import { EditProduct } from '../ui/edit-product/edit-product';
 
 export const useColumns = () => {
   const columns: ColumnDef<Product>[] = [
@@ -45,6 +46,7 @@ export const useColumns = () => {
       header: 'Name',
       cell: ({ row }) => {
         const { isPurchased } = row.original;
+
         return (
           <div className={cn('capitalize', isPurchased && 'line-through')}>
             {row.getValue('name')}
@@ -70,10 +72,7 @@ export const useColumns = () => {
     {
       id: 'actions',
       enableHiding: false,
-      cell: () => {
-        // { row }
-        // const payment = row.original;
-
+      cell: ({ row }) => {
         return (
           <div className="flex justify-center">
             <DropdownMenu>
@@ -86,7 +85,7 @@ export const useColumns = () => {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <EditProduct product={row.original} rowIndex={row.index} />
                 <DropdownMenuItem>Remove</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

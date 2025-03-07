@@ -30,7 +30,6 @@ export default function ShoppingList() {
 
   return (
     <section className="max-w-4xl mx-auto">
-      <button>Update</button>
       <Actions table={table} />
       <DataTable table={table} columnsLength={columns.length} />
     </section>
