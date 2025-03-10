@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode, useId } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from './schema';
@@ -22,15 +22,23 @@ import { Product } from '@/shared/types/product';
 
 interface Props {
   onSubmitForm: (values: FormValues) => void;
-  formId: string;
   defaultValues?: Product;
+  children: ({
+    isDisabled,
+    formId,
+  }: {
+    isDisabled: boolean;
+    formId: string;
+  }) => ReactNode;
 }
 
 export const ProductForm: FC<Props> = ({
-  formId,
   defaultValues,
   onSubmitForm,
+  children,
 }: Props) => {
+  const formId = useId();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,6 +51,8 @@ export const ProductForm: FC<Props> = ({
   const onSubmit = (values: FormValues) => {
     onSubmitForm(values);
   };
+
+  const isDisabled = !form.formState.isDirty;
 
   return (
     <FormProvider {...form}>
@@ -112,6 +122,7 @@ export const ProductForm: FC<Props> = ({
           )}
         />
       </form>
+      {children({ isDisabled, formId })}
     </FormProvider>
   );
 };

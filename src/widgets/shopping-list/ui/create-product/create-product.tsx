@@ -14,8 +14,6 @@ import { ProductForm } from '../product-form/product-form';
 import { FormValues } from '../product-form/schema';
 import { useProductsActions } from '@/entities/Product/model/hooks';
 
-const formId = 'createProduct';
-
 export const CreateProduct = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const { addProduct } = useProductsActions();
@@ -44,13 +42,15 @@ export const CreateProduct = memo(() => {
           </DialogDescription>
         </DialogHeader>
 
-        <ProductForm onSubmitForm={handleSubmitForm} formId={formId} />
-
-        <DialogFooter>
-          <Button type="submit" form={formId}>
-            Submit
-          </Button>
-        </DialogFooter>
+        <ProductForm onSubmitForm={handleSubmitForm}>
+          {({ isDisabled, formId }) => (
+            <DialogFooter>
+              <Button type="submit" form={formId} disabled={isDisabled}>
+                Submit
+              </Button>
+            </DialogFooter>
+          )}
+        </ProductForm>
       </DialogContent>
     </Dialog>
   );

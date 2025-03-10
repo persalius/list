@@ -13,8 +13,6 @@ import { Product } from '@/shared/types/product';
 import { useProductsActions } from '@/entities/Product/model/hooks';
 import { FormValues } from '../product-form/schema';
 
-const formId = 'editProduct';
-
 interface Props {
   product: Product;
   rowIndex: number;
@@ -39,17 +37,15 @@ export const EditProduct: FC<Props> = memo(
             <DialogDescription>Update the product details.</DialogDescription>
           </DialogHeader>
 
-          <ProductForm
-            onSubmitForm={handleSubmitForm}
-            formId={formId}
-            defaultValues={product}
-          />
-
-          <DialogFooter>
-            <Button type="submit" form={formId}>
-              Submit
-            </Button>
-          </DialogFooter>
+          <ProductForm onSubmitForm={handleSubmitForm} defaultValues={product}>
+            {({ isDisabled, formId }) => (
+              <DialogFooter>
+                <Button type="submit" form={formId} disabled={isDisabled}>
+                  Submit
+                </Button>
+              </DialogFooter>
+            )}
+          </ProductForm>
         </DialogContent>
       </Dialog>
     );

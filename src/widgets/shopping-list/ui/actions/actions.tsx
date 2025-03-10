@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { FilterTable, SearchInput } from '@/features/table';
 import { Button } from '@/shared/ui/button';
 import { Table as TableData } from '@tanstack/react-table';
@@ -15,7 +15,7 @@ interface Props {
   table: TableData<Product>;
 }
 
-export const Actions: FC<Props> = ({ table }) => {
+export const Actions: FC<Props> = memo(({ table }) => {
   const { undo, clear } = useHistoryActions();
   const pastStates = useHistoryPastStates();
 
@@ -81,4 +81,4 @@ export const Actions: FC<Props> = ({ table }) => {
       </div>
     </>
   );
-};
+});
