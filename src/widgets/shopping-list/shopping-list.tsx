@@ -7,6 +7,7 @@ import {
   useProducts,
   useProductsActions,
 } from '@/entities/Product/model/hooks';
+import ErrorBoundary from '@/features/error-boundary';
 
 declare module '@tanstack/react-table' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,8 +31,13 @@ export default function ShoppingList() {
 
   return (
     <section className="max-w-4xl mx-auto">
-      <Actions table={table} />
-      <DataTable table={table} columnsLength={columns.length} />
+      <ErrorBoundary>
+        <Actions table={table} />
+      </ErrorBoundary>
+
+      <ErrorBoundary>
+        <DataTable table={table} columnsLength={columns.length} />
+      </ErrorBoundary>
     </section>
   );
 }
