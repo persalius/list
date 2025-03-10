@@ -1,26 +1,24 @@
-import { Table as TableData } from '@tanstack/react-table';
+import { FC, useEffect, useState } from 'react';
 import { Input } from '@/shared/ui/input';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
-interface Props<T> {
-  table: TableData<T>;
-  placeholder?: string;
-  filterField: keyof T;
+interface Props {
+  onChangeSearch: (value: string) => void;
 }
 
-export const SearchInput = <T,>({
-  table,
-  placeholder = 'Search...',
-  filterField,
-}: Props<T>) => {
+export const SearchInput: FC<Props> = ({ onChangeSearch }) => {
+  const [value, setValue] = useState('');
+  const debounceValue = useDebounce(value);
+
+  useEffect(() => {
+    onChangeSearch(debounceValue);
+  }, [debounceValue, onChangeSearch]);
+
   return (
     <Input
-      placeholder={placeholder}
-      value={
-        (table.getColumn(String(filterField))?.getFilterValue() as string) ?? ''
-      }
-      onChange={(event) =>
-        table.getColumn(String(filterField))?.setFilterValue(event.target.value)
-      }
+      placeholder="Search by name..."
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
       className="max-w-sm"
     />
   );

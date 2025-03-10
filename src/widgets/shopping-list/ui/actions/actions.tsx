@@ -19,6 +19,13 @@ export const Actions: FC<Props> = ({ table }) => {
   const { undo, clear } = useHistoryActions();
   const pastStates = useHistoryPastStates();
 
+  const handleChangeSearch = useCallback(
+    (value: string) => {
+      table.getColumn('name')?.setFilterValue(value);
+    },
+    [table],
+  );
+
   const handleChangeStatus = useCallback(
     (value: string) => {
       const isValidValue = Object.keys(purchasedItems).find(
@@ -35,44 +42,42 @@ export const Actions: FC<Props> = ({ table }) => {
   return (
     <>
       <div className="flex items-center justify-between pb-4">
-        <SearchInput
-          table={table}
-          placeholder="Search by name..."
-          filterField="name"
-        />
+        <SearchInput onChangeSearch={handleChangeSearch} />
         <div className="flex gap-4">
           <Button
             type="button"
+            variant="outline"
             onClick={() => clear()}
             disabled={!pastStates.length}
           >
             Save
           </Button>
-
-          <Button
-            type="button"
-            onClick={() => undo()}
-            disabled={!pastStates.length}
-          >
-            Undo
-          </Button>
           <CreateProduct />
         </div>
       </div>
 
-      <div className="flex items-center gap-4 pb-4">
-        <FilterTable
-          items={CATEGORIES}
-          placeholder="Filter by category..."
-          onChange={(value) =>
-            table.getColumn('category')?.setFilterValue(value)
-          }
-        />
-        <FilterTable
-          items={purchasedItems}
-          placeholder="Filter by status..."
-          onChange={handleChangeStatus}
-        />
+      <div className="flex justify-between gap-4 pb-4">
+        <div className="flex items-center gap-4">
+          <FilterTable
+            items={CATEGORIES}
+            placeholder="Filter by category..."
+            onChange={(value) =>
+              table.getColumn('category')?.setFilterValue(value)
+            }
+          />
+          <FilterTable
+            items={purchasedItems}
+            placeholder="Filter by status..."
+            onChange={handleChangeStatus}
+          />
+        </div>
+        <Button
+          type="button"
+          onClick={() => undo()}
+          disabled={!pastStates.length}
+        >
+          Undo
+        </Button>
       </div>
     </>
   );
