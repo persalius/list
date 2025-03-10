@@ -6,12 +6,19 @@ import { CreateProduct } from '../create-product/create-product';
 import { CATEGORIES } from '@/shared/config/product';
 import { purchasedItems, purchasedVariants } from '../../model/constants';
 import { Product } from '@/shared/types/product';
+import {
+  useHistoryActions,
+  useHistoryPastStates,
+} from '@/entities/Product/model/hooks';
 
 interface Props {
   table: TableData<Product>;
 }
 
 export const Actions: FC<Props> = ({ table }) => {
+  const { undo, clear } = useHistoryActions();
+  const pastStates = useHistoryPastStates();
+
   const handleChangeStatus = useCallback(
     (value: string) => {
       const isValidValue = Object.keys(purchasedItems).find(
@@ -34,7 +41,19 @@ export const Actions: FC<Props> = ({ table }) => {
           filterField="name"
         />
         <div className="flex gap-4">
-          <Button type="button" onClick={() => {}}>
+          <Button
+            type="button"
+            onClick={() => clear()}
+            disabled={!pastStates.length}
+          >
+            Save
+          </Button>
+
+          <Button
+            type="button"
+            onClick={() => undo()}
+            disabled={!pastStates.length}
+          >
             Undo
           </Button>
           <CreateProduct />

@@ -1,4 +1,6 @@
-import useProductsStore from './store';
+import { useStore } from 'zustand';
+import useProductsStore, { ProductsStore } from './store';
+import { TemporalState } from 'zundo';
 
 export const useProducts = () => {
   return useProductsStore((state) => state.products);
@@ -12,6 +14,16 @@ export const useProductsActions = () => {
   return { addProduct, updateProduct, removeProduct };
 };
 
-export const useProductsHistory = () => {
-  return useProductsStore((state) => state.history);
+export const useHistoryActions = () => {
+  const { undo, clear } = useProductsStore.temporal.getState();
+  return { undo, clear };
+};
+
+const useHistory = <T>(selector: (state: TemporalState<ProductsStore>) => T) =>
+  useStore(useProductsStore.temporal, selector);
+
+export const useHistoryPastStates = () => {
+  const pastStates = useHistory((state) => state.pastStates);
+
+  return pastStates;
 };

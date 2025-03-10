@@ -1,88 +1,50 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { temporal } from 'zundo';
 import { Product } from '@/shared/types/product';
-
-type HistoryEntry = {
-  type: 'add' | 'remove' | 'update';
-  product: Product;
-};
 
 type State = {
   products: Product[];
-  history: HistoryEntry[];
 };
 
-type Action = {
+type Actions = {
   addProduct: (product: Product) => void;
   updateProduct: (rowIndex: number, productData: Partial<Product>) => void;
   removeProduct: (rowIndex: number) => void;
 };
 
-const useProductsStore = create<State & Action>()(
-  immer((set, get) => ({
-    products: [],
-    history: [],
+export type ProductsStore = State & Actions;
 
-    addProduct: (product: Product) => {
-      const newProducts = [...get().products, product];
-      set({
-        products: newProducts,
-        // history: [...get().history, { type: 'add', product }],
-      });
-    },
+const useProductsStore = create<ProductsStore>()(
+  temporal(
+    immer<State & Actions>((set, get) => ({
+      products: [],
 
-    updateProduct: (rowIndex: number, productData: Partial<Product>) => {
-      return set((state) => {
-        const updatedProduct = {
-          ...state.products[rowIndex],
-          ...productData,
-        };
+      addProduct: (product: Product) => {
+        const newProducts = [...get().products, product];
+        set({
+          products: newProducts,
+        });
+      },
 
-        state.products[rowIndex] = updatedProduct;
-        // state.history.push({
-        //   type: 'update',
-        //   product: updatedProduct,
-        // });
-      });
-    },
+      updateProduct: (rowIndex: number, productData: Partial<Product>) => {
+        return set((state) => {
+          const updatedProduct = {
+            ...state.products[rowIndex],
+            ...productData,
+          };
 
-    removeProduct: (rowIndex: number) => {
-      return set((state) => {
-        // set({
-        //   products: newProducts,
-        //   history: [
-        //     ...get().history,
-        //     { type: 'remove', product: removedProduct },
-        //   ],
-        // });
+          state.products[rowIndex] = updatedProduct;
+        });
+      },
 
-        state.products.splice(rowIndex, 1);
-      });
-    },
-
-    //   undo: () => {
-    //     const history = get().history;
-    //     if (history.length > 0) {
-    //       const lastAction = history[history.length - 1];
-    //       let newProducts = [...get().products];
-
-    //       if (lastAction.type === 'add') {
-    //         newProducts = newProducts.filter((p) => p.id !== lastAction.product.id);
-    //       } else if (lastAction.type === 'remove') {
-    //         newProducts = [...newProducts, lastAction.product];
-    //       } else if (lastAction.type === 'update') {
-    //         newProducts = newProducts.map((p) =>
-    //           p.id === lastAction.product.id ? lastAction.product : p,
-    //         );
-    //       }
-
-    //       set({
-    //         products: newProducts,
-    //         history: history.slice(0, -1),
-    //       });
-    //     }
-    //   },
-  })),
+      removeProduct: (rowIndex: number) => {
+        return set((state) => {
+          state.products.splice(rowIndex, 1);
+        });
+      },
+    })),
+  ),
 );
 
 export default useProductsStore;
