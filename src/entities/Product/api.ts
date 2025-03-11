@@ -3,8 +3,8 @@ import { Product } from '@/shared/types/product';
 async function mockFetchData() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const data = localStorage.getItem('products') || '';
-      const products = JSON.parse(data) || [];
+      const data = localStorage.getItem('products') || '[]';
+      const products = JSON.parse(data);
       resolve(products);
     }, 1000);
   });
