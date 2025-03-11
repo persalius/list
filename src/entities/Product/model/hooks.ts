@@ -14,11 +14,6 @@ export const useProductsActions = () => {
   return { addProduct, updateProduct, removeProduct, setProducts };
 };
 
-export const useHistoryActions = () => {
-  const { undo, clear, pause, resume } = useProductsStore.temporal.getState();
-  return { undo, clear, pause, resume };
-};
-
 export function useTemporalStore() {
   return useStoreWithEqualityFn(useProductsStore.temporal, (state) => state);
 }

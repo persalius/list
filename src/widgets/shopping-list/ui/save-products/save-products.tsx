@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistoryActions, useProducts } from '@/entities/product/model/hooks';
+import { useTemporalStore, useProducts } from '@/entities/product/model/hooks';
 import { Button } from '@/shared/ui/button';
 import { LoadingSpinner } from '@/shared/ui/loading-spinner';
 import { useSaveProducts } from '../../../../entities/product/hooks/useSaveProducts';
@@ -10,7 +10,7 @@ interface Props {
 
 export const SaveProducts: FC<Props> = ({ isDisabled }) => {
   const products = useProducts();
-  const { clear } = useHistoryActions();
+  const { clear } = useTemporalStore();
 
   const { mutate, isPending } = useSaveProducts();
 
