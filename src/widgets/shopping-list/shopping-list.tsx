@@ -6,8 +6,9 @@ import { Product } from '@/shared/types/product';
 import {
   useProducts,
   useProductsActions,
-} from '@/entities/Product/model/hooks';
+} from '@/entities/product/model/hooks';
 import ErrorBoundary from '@/features/error-boundary';
+import { useGetProducts } from '../../entities/product/hooks/useGetProducts';
 
 declare module '@tanstack/react-table' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,6 +20,8 @@ declare module '@tanstack/react-table' {
 export default function ShoppingList() {
   const products = useProducts();
   const { updateProduct } = useProductsActions();
+
+  const { isLoading } = useGetProducts();
 
   const columns = useColumns();
   const table = useTable({
@@ -36,7 +39,11 @@ export default function ShoppingList() {
       </ErrorBoundary>
 
       <ErrorBoundary>
-        <DataTable table={table} columnsLength={columns.length} />
+        <DataTable
+          table={table}
+          columnsLength={columns.length}
+          isLoading={isLoading}
+        />
       </ErrorBoundary>
     </section>
   );

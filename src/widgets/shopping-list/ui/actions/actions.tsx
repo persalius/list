@@ -9,14 +9,15 @@ import { Product } from '@/shared/types/product';
 import {
   useHistoryActions,
   useHistoryPastStates,
-} from '@/entities/Product/model/hooks';
+} from '@/entities/product/model/hooks';
+import { SaveProducts } from '../save-products/save-products';
 
 interface Props {
   table: TableData<Product>;
 }
 
 export const Actions: FC<Props> = memo(({ table }) => {
-  const { undo, clear } = useHistoryActions();
+  const { undo } = useHistoryActions();
   const pastStates = useHistoryPastStates();
 
   const handleChangeSearch = useCallback(
@@ -44,14 +45,7 @@ export const Actions: FC<Props> = memo(({ table }) => {
       <div className="flex items-center justify-between pb-4">
         <SearchInput onChangeSearch={handleChangeSearch} />
         <div className="flex gap-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => clear()}
-            disabled={!pastStates.length}
-          >
-            Save
-          </Button>
+          <SaveProducts isDisabled={!pastStates.length} />
           <CreateProduct />
         </div>
       </div>

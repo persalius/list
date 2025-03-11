@@ -1,4 +1,4 @@
-import { useProductsActions } from '@/entities/Product/model/hooks';
+import { useProductsActions } from '@/entities/product/model/hooks';
 import {
   AlertDialog,
   AlertDialogAction,

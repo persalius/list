@@ -8,6 +8,7 @@ type State = {
 };
 
 type Actions = {
+  setProducts: (products: Product[]) => void;
   addProduct: (product: Product) => void;
   updateProduct: (rowIndex: number, productData: Partial<Product>) => void;
   removeProduct: (rowIndex: number) => void;
@@ -19,6 +20,12 @@ const useProductsStore = create<ProductsStore>()(
   temporal(
     immer<State & Actions>((set, get) => ({
       products: [],
+
+      setProducts: (products: Product[]) => {
+        set({
+          products,
+        });
+      },
 
       addProduct: (product: Product) => {
         const newProducts = [...get().products, product];

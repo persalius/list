@@ -1,5 +1,23 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './app/styles/index.css';
+import { Toaster } from './shared/ui/sonner';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+export function ErrorBoundary() {
+  return (
+    <div className="flex items-center justify-center w-screen h-screen">
+      <h1>Oh, an error occurred. Try refreshing the page.</h1>
+    </div>
+  );
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +30,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex flex-col min-h-screen">
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <Toaster />
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

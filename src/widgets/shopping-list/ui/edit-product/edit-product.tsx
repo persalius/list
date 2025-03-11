@@ -10,7 +10,7 @@ import {
 } from '@/shared/ui/dialog';
 import { ProductForm } from '../product-form/product-form';
 import { Product } from '@/shared/types/product';
-import { useProductsActions } from '@/entities/Product/model/hooks';
+import { useProductsActions } from '@/entities/product/model/hooks';
 import { FormValues } from '../product-form/schema';
 
 interface Props {

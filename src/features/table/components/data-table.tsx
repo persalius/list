@@ -1,3 +1,4 @@
+import { LoadingSpinner } from '@/shared/ui/loading-spinner';
 import {
   Table as UiTable,
   TableBody,
@@ -12,9 +13,14 @@ import { Table as TableData } from '@tanstack/react-table';
 interface Props<T> {
   table: TableData<T>;
   columnsLength: number;
+  isLoading: boolean;
 }
 
-export const DataTable = <T,>({ table, columnsLength }: Props<T>) => {
+export const DataTable = <T,>({
+  table,
+  columnsLength,
+  isLoading,
+}: Props<T>) => {
   return (
     <UiTable
       classNames={{ root: 'rounded-md border max-h-120 overflow-y-auto' }}
@@ -39,7 +45,7 @@ export const DataTable = <T,>({ table, columnsLength }: Props<T>) => {
       </TableHeader>
 
       <TableBody>
-        {table.getRowModel().rows?.length ? (
+        {!isLoading && table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
@@ -55,7 +61,7 @@ export const DataTable = <T,>({ table, columnsLength }: Props<T>) => {
         ) : (
           <TableRow>
             <TableCell colSpan={columnsLength} className="h-24 text-center">
-              No results.
+              {isLoading ? <LoadingSpinner /> : 'No results.'}
             </TableCell>
           </TableRow>
         )}

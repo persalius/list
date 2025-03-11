@@ -12,7 +12,7 @@ import {
 } from '@/shared/ui/dialog';
 import { ProductForm } from '../product-form/product-form';
 import { FormValues } from '../product-form/schema';
-import { useProductsActions } from '@/entities/Product/model/hooks';
+import { useProductsActions } from '@/entities/product/model/hooks';
 
 export const CreateProduct = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
