@@ -1,6 +1,13 @@
 # List application
 
-A brief description of your project. Explain what your project does, the problems it solves, and why it is useful.
+List Application is a modern, scalable, and performant shopping list app designed to help users manage their shopping tasks efficiently. Built with React and a robust tech stack, this application allows users to:
+
+- Add items to their shopping list with details like name, quantity, and category.
+- Edit or remove items as needed.
+- Mark items as purchased to keep track of what's been bought.
+- Undo actions to correct mistakes quickly.
+- Search for items in real-time for better usability.
+- Filter items by category or purchase status for better organization.
 
 ## Getting Started
 
