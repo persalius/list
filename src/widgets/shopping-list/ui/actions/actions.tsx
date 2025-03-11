@@ -6,10 +6,7 @@ import { CreateProduct } from '../create-product/create-product';
 import { CATEGORIES } from '@/shared/config/product';
 import { purchasedItems, purchasedVariants } from '../../model/constants';
 import { Product } from '@/shared/types/product';
-import {
-  useHistoryActions,
-  useHistoryPastStates,
-} from '@/entities/product/model/hooks';
+import { useTemporalStore } from '@/entities/product/model/hooks';
 import { SaveProducts } from '../save-products/save-products';
 
 interface Props {
@@ -17,8 +14,7 @@ interface Props {
 }
 
 export const Actions: FC<Props> = memo(({ table }) => {
-  const { undo } = useHistoryActions();
-  const pastStates = useHistoryPastStates();
+  const { undo, pastStates } = useTemporalStore();
 
   const handleChangeSearch = useCallback(
     (value: string) => {

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { temporal } from 'zundo';
 import { Product } from '@/shared/types/product';
+import { subscribeWithSelector } from 'zustand/middleware';
 
 type State = {
   products: Product[];
@@ -17,40 +18,42 @@ type Actions = {
 export type ProductsStore = State & Actions;
 
 const useProductsStore = create<ProductsStore>()(
-  temporal(
-    immer<State & Actions>((set, get) => ({
-      products: [],
+  subscribeWithSelector(
+    temporal(
+      immer<State & Actions>((set, get) => ({
+        products: [],
 
-      setProducts: (products: Product[]) => {
-        set({
-          products,
-        });
-      },
+        setProducts: (products: Product[]) => {
+          set({
+            products,
+          });
+        },
 
-      addProduct: (product: Product) => {
-        const newProducts = [...get().products, product];
-        set({
-          products: newProducts,
-        });
-      },
+        addProduct: (product: Product) => {
+          const newProducts = [...get().products, product];
+          set({
+            products: newProducts,
+          });
+        },
 
-      updateProduct: (rowIndex: number, productData: Partial<Product>) => {
-        return set((state) => {
-          const updatedProduct = {
-            ...state.products[rowIndex],
-            ...productData,
-          };
+        updateProduct: (rowIndex: number, productData: Partial<Product>) => {
+          return set((state) => {
+            const updatedProduct = {
+              ...state.products[rowIndex],
+              ...productData,
+            };
 
-          state.products[rowIndex] = updatedProduct;
-        });
-      },
+            state.products[rowIndex] = updatedProduct;
+          });
+        },
 
-      removeProduct: (rowIndex: number) => {
-        return set((state) => {
-          state.products.splice(rowIndex, 1);
-        });
-      },
-    })),
+        removeProduct: (rowIndex: number) => {
+          return set((state) => {
+            state.products.splice(rowIndex, 1);
+          });
+        },
+      })),
+    ),
   ),
 );
 

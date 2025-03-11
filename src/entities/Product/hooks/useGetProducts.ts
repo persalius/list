@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import {
-  useHistoryActions,
+  useTemporalStore,
   useProductsActions,
 } from '@/entities/product/model/hooks';
 import { Product } from '@/shared/types/product';
@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 export const useGetProducts = () => {
   const { setProducts } = useProductsActions();
-  const { pause, resume } = useHistoryActions();
+  const { pause, resume } = useTemporalStore();
 
   const handleSetProducts = useCallback(
     (data: Product[]) => {
