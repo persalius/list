@@ -25,6 +25,7 @@ export const SaveProducts: FC<Props> = ({ isDisabled }) => {
       variant="outline"
       onClick={handleSaveProducts}
       disabled={isDisabled}
+      className="flex-1"
     >
       {isPending && <LoadingSpinner />}
       Save

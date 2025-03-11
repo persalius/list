@@ -38,15 +38,15 @@ export const Actions: FC<Props> = memo(({ table }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between pb-4">
+      <div className="flex items-center justify-between pb-4 gap-4 flex-col sm:flex-row">
         <SearchInput onChangeSearch={handleChangeSearch} />
-        <div className="flex gap-4">
+        <div className="flex gap-4 w-full sm:w-auto">
           <SaveProducts isDisabled={!pastStates.length} />
           <CreateProduct />
         </div>
       </div>
 
-      <div className="flex justify-between gap-4 pb-4">
+      <div className="flex flex-col md:flex-row justify-between gap-4 pb-4">
         <div className="flex items-center gap-4">
           <FilterTable
             items={CATEGORIES}

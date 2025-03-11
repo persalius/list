@@ -19,7 +19,7 @@ export const SearchInput: FC<Props> = ({ onChangeSearch }) => {
       placeholder="Search by name..."
       value={value}
       onChange={(event) => setValue(event.target.value)}
-      className="max-w-sm"
+      className="sm:max-w-sm"
     />
   );
 };

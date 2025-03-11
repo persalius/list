@@ -31,7 +31,7 @@ export const CreateProduct = memo(() => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="flex-1">
         <Button variant="outline">Add new</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

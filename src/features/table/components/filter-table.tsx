@@ -38,7 +38,7 @@ export const FilterTable: FC<Props> = ({
 
   return (
     <Select onValueChange={handleChange} value={value}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="flex-1 min-w-0">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
